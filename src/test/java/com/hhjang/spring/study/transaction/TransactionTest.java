@@ -2,13 +2,11 @@ package com.hhjang.spring.study.transaction;
 
 import com.hhjang.spring.study.transaction.user.User;
 import com.hhjang.spring.study.transaction.user.UserRepository;
-import com.hhjang.spring.study.transaction.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -16,13 +14,16 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/*
+ *  @Transactional 메소드를 직접 호출 시와 외부를 통해 호출 시 rollback을 확인하는 테스트
+ */
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TransactionTest {
 
-    @Qualifier("proxyUserService")
     @Autowired
-    private UserService proxyUserService;
+    private ProxyUserService proxyUserService;
 
     @Autowired
     private UserRepository userRepository;
@@ -33,14 +34,14 @@ public class TransactionTest {
     }
 
     @Test
-    @DisplayName("Proxy 객체 내부에서 직접 호출 시, Exception이 발생해도 롤백되지 않음을 확인하는 테스트")
+    @DisplayName("내부에서 직접 호출 시, 프록시 객체에 의해 Exception이 발생해도 롤백되지 않음을 확인하는 테스트")
     public void transactionNotRollbackTest() {
         User tester = new User();
         tester.setEmail("test@gmail.com");
         tester.setName("tester");
 
         try {
-            proxyUserService.createUser(tester);
+            proxyUserService.createUserOuter(tester);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }
@@ -57,7 +58,7 @@ public class TransactionTest {
         tester.setName("tester");
 
         try {
-            ((ProxyUserService) proxyUserService).createUserThrowException(tester);
+            proxyUserService.createUserThrowException(tester);
         } catch (RuntimeException e) {
             e.printStackTrace();
         }

@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /*
- *  UserService proxy 객체
- *  Transaction test를 위한 createUser에 @Transactional 추가
+ *  트랜잭션 테스트를 위해 userService를 주입받음
+ *  Transaction test를 위한 createUserThrowException @Transactional 추가
  */
 
 @Service("proxyUserService")
-public class ProxyUserService implements UserService {
+public class ProxyUserService {
 
     private final UserService userService;
 
@@ -20,14 +20,13 @@ public class ProxyUserService implements UserService {
         this.userService = userService;
     }
 
-    @Override
-    public User createUser(User user) {
-        return createUserThrowException(user);
-    }
-
     @Transactional
     public User createUserThrowException(User user) {
         this.userService.createUser(user);
         throw new RuntimeException("occur create user runtime exception!!!");
+    }
+
+    public User createUserOuter(User user) {
+        return createUserThrowException(user);
     }
 }
