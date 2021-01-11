@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class TransactionTest {
+public class ProxyTransactionTest {
 
     @Autowired
     private ProxyUserService proxyUserService;

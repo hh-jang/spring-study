@@ -16,4 +16,14 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(user);
         return savedUser;
     }
+
+    @Override
+    public User updateUser(final Integer id, final String afterEmail, final String afterName) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("user not fount"));
+        user.setEmail(afterEmail);
+        user.setName(afterName);
+
+        User updatedUser = userRepository.save(user);
+        return updatedUser;
+    }
 }
