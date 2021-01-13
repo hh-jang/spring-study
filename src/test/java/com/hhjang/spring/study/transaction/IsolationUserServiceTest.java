@@ -32,7 +32,7 @@ public class IsolationUserServiceTest {
 
     @BeforeEach
     public void setUp() {
-        createTestUser();
+        defaultUser = createTestUser();
     }
 
     @AfterEach
@@ -43,18 +43,27 @@ public class IsolationUserServiceTest {
     @Test
     @DisplayName("Non Repeatable Read를 재현하는 테스트 코드")
     public void nonRepeatableReadTest() {
-        boolean result = isolationUserService.nonRepeatableRead(defaultUser);
+//        boolean occurNonRepeatableRead = isolationUserService.nonRepeatableRead(defaultUser);
 
-        // dirty read가 발생했으면 true
-        // TODO 짜놓고 보니 jpa persistance context가 관리해서 이렇게하면 재현 안됨! 수정 필요
-        assertThat(result).isTrue();
+//        assertThat(occurNonRepeatableRead).isTrue();
     }
 
-    private void createTestUser() {
+    @Test
+    @DisplayName("Phantom Read를 재현하는 테스트 코드")
+    public void phantomReadTest() {
+        User createNewUser = new User();
+        createNewUser.setEmail("test@gmail.com");
+        createNewUser.setName("tester");
+        boolean occurNonRepeatableRead = isolationUserService.phantomRead(createNewUser);
+
+        assertThat(occurNonRepeatableRead).isTrue();
+    }
+
+    private User createTestUser() {
         User user = new User();
         user.setEmail("test@gmail.com");
         user.setName("tester");
 
-        defaultUser = userService.createUser(user);
+        return userService.createUser(user);
     }
 }

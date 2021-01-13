@@ -2,6 +2,8 @@ package com.hhjang.spring.study.transaction.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -30,5 +32,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("user not fount"));
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }
