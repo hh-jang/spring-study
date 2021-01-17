@@ -42,18 +42,21 @@ public class IsolationUserServiceTest {
 
     @Test
     @DisplayName("Non Repeatable Read를 재현하는 테스트 코드")
-    public void nonRepeatableReadTest() {
-//        boolean occurNonRepeatableRead = isolationUserService.nonRepeatableRead(defaultUser);
+    public void nonRepeatableReadTest() throws InterruptedException {
+        User createNewUser = new User();
+        createNewUser.setEmail("test@gmail.com");
+        createNewUser.setName("tester");
+        boolean occurNonRepeatableRead = isolationUserService.nonRepeatableRead(createNewUser);
 
-//        assertThat(occurNonRepeatableRead).isTrue();
+        assertThat(occurNonRepeatableRead).isTrue();
     }
 
     @Test
     @DisplayName("Phantom Read를 재현하는 테스트 코드")
     public void phantomReadTest() {
         User createNewUser = new User();
-        createNewUser.setEmail("test@gmail.com");
-        createNewUser.setName("tester");
+        createNewUser.setEmail("secondNewUser@gmail.com");
+        createNewUser.setName("secondNewUser");
         boolean occurNonRepeatableRead = isolationUserService.phantomRead(createNewUser);
 
         assertThat(occurNonRepeatableRead).isTrue();
