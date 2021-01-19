@@ -24,10 +24,10 @@ public class IsolationUserService {
         this.em = em;
     }
 
-    // Non-Repeatable-Read 발생
+    // READ_COMMITTED에서 Non-Repeatable-Read 발생
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public boolean nonRepeatableRead(User user) throws InterruptedException {
-        User beforeUpdateUser = userService.findById(1);
+    public boolean nonRepeatableRead_read_committed(User user) throws InterruptedException {
+        User beforeUpdateUser = userService.findById(user.getId());
         userService.updateUser(
                 beforeUpdateUser.getId(),
                 "updatedEmail@google.com",
@@ -42,15 +42,32 @@ public class IsolationUserService {
                 && beforeUpdateUser.getName().equals(afterUpdateUser.getName()));
     }
 
+    // REPEATABLE_READ에서 Non-Repeatable-Read 발생하지 않는
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public boolean nonRepeatableReadRepeatableRead(User user) throws InterruptedException {
+        User beforeUpdateUser = userService.findById(user.getId());
+        userService.updateUser(
+                beforeUpdateUser.getId(),
+                "updatedEmail@google.com",
+                "updatedName"
+        );
+        // 영속성 컨텍스트에 존재하는 유저의 1차 캐싱을 지우기 위해 초기화
+        em.clear();
+
+        User afterUpdateUser = userService.findById(user.getId());
+
+        return (beforeUpdateUser.getEmail().equals(afterUpdateUser.getEmail())
+                && beforeUpdateUser.getName().equals(afterUpdateUser.getName()));
+    }
+
     // REPEATABLE_READ에서 Phanttom Read를 발생
-    // TODO why SERIALIZE에서도 발생하는지 확인
-    @Transactional(isolation = Isolation.SERIALIZABLE)
-    public boolean phantomRead(User user) {
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public boolean phantomReadRepeatableRead(User user) {
         List<User> beforeUserList = userService.findAll();
 
-        userRepository.save(user);
-        em.flush();
-
+        User createdUser = userService.createUser(user);
+        createdUser.setName("updatedName");
+        userRepository.save(createdUser);
 
         List<User> afterUserList = userService.findAll();
 

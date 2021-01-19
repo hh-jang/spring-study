@@ -1,6 +1,7 @@
 package com.hhjang.spring.study.transaction.repository;
 
 import com.hhjang.spring.study.transaction.user.User;
+import com.hhjang.spring.study.transaction.user.UserRepository;
 import com.hhjang.spring.study.transaction.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,13 @@ public class UserServiceTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @BeforeEach
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 
     @Test
     @DisplayName("User를 생성하는 테스트")
