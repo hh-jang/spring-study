@@ -36,7 +36,7 @@ public class IsolationUserService {
         // 영속성 컨텍스트에 존재하는 유저의 1차 캐싱을 지우기 위해 초기화
         em.clear();
 
-        User afterUpdateUser = userService.findById(1);
+        User afterUpdateUser = userService.findById(beforeUpdateUser.getId());
 
         return !(beforeUpdateUser.getEmail().equals(afterUpdateUser.getEmail())
                 && beforeUpdateUser.getName().equals(afterUpdateUser.getName()));

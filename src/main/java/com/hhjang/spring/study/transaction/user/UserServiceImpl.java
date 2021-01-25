@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Integer id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("user not fount"));
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("user not found"));
     }
 
     @Override
