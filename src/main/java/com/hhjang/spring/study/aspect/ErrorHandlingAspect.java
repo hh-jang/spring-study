@@ -5,12 +5,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.ObjectError;
 
 @Aspect
 @Component
 @Slf4j
+@Profile("!test")
 public class ErrorHandlingAspect {
 
     @Around("userServiceErrorHandling()")

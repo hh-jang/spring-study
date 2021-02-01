@@ -1,5 +1,6 @@
-package com.hhjang.spring.study.transaction.repository;
+package com.hhjang.spring.study.transaction.service;
 
+import com.hhjang.spring.study.config.CommonTestConfig;
 import com.hhjang.spring.study.transaction.user.User;
 import com.hhjang.spring.study.transaction.user.UserRepository;
 import com.hhjang.spring.study.transaction.user.UserService;
@@ -12,10 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class UserServiceTest {
+public class UserServiceTest extends CommonTestConfig {
 
     @Autowired
     private UserService userService;
@@ -65,5 +67,16 @@ public class UserServiceTest {
         assertThat(updatedUser.getId()).isEqualTo(savedUser.getId());
         assertThat(updatedUser.getEmail()).isEqualTo(afterEmail);
         assertThat(updatedUser.getName()).isEqualTo(afterName);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 User를 Update하면 Exception이 발생한다")
+    public void updateUser_Not_Found() {
+        assertThatThrownBy(() -> {
+            userService.updateUser(100, "newEmail", "newName");
+        })
+                .isInstanceOf(RuntimeException.class)
+                .hasMessage("user not fount")
+        ;
     }
 }
