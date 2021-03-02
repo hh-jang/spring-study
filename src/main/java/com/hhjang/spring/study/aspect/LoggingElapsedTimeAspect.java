@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
@@ -17,6 +18,7 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Slf4j
+@Profile("!test")
 public class LoggingElapsedTimeAspect {
 
     // Advice, 특정한 JoinPoint에서 실행되는 Action
