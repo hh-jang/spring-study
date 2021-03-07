@@ -1,4 +1,4 @@
-package com.hhjang.spring.study.jpa.ch3;
+package com.hhjang.spring.study.jpa.ch4;
 
 import com.hhjang.spring.study.jpa.ch2.Member;
 import org.junit.jupiter.api.DisplayName;
