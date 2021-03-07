@@ -1,4 +1,4 @@
-package com.hhjang.spring.study.jpa.ch1.entity;
+package com.hhjang.spring.study.jpa.ch2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 public class MemberTest {
@@ -34,8 +32,6 @@ public class MemberTest {
         } finally {
             entityManager.close();
         }
-
-
     }
 
     private void businessLogic(EntityManager em) {

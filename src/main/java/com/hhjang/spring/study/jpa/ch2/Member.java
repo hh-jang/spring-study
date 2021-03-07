@@ -1,4 +1,4 @@
-package com.hhjang.spring.study.jpa.ch1.entity;
+package com.hhjang.spring.study.jpa.ch2;
 
 import lombok.Getter;
 import lombok.Setter;
