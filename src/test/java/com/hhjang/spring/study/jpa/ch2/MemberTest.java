@@ -51,7 +51,7 @@ public class MemberTest {
         Member foundMember = em.find(Member.class, id);
         System.out.println("found member : " + foundMember.getId() + " " + foundMember.getAge() + " " + foundMember.getUsername());
 
-        List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+        List<Member> members = em.createQuery("select m from CH2_MEMBER m", Member.class).getResultList();
         System.out.println("member size : " + members.size());
 
         em.remove(member);
