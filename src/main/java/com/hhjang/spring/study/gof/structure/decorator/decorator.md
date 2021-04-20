@@ -22,7 +22,7 @@
 
 ![img.png](../../../../../../../../../images/decorator_pattern.png)
 
-출처 : [https://en.wikipedia.org/wiki/Decorator_pattern](https://en.wikipedia.org/wiki/Decorator_pattern)
+출처 : [http://w3sdesign.com/?gr=s04&ugr=struct](http://w3sdesign.com/?gr=s04&ugr=struct)
 
 ## Example ##
 
