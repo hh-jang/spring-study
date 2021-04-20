@@ -17,7 +17,7 @@
 
 ![img.png](../../../../../../../../../images/adapter_pattern.png)
 
-[w3sdesign.com](http://w3sdesign.com/?gr=s01&ugr=struct) 
+출처 : [http://w3sdesign.com/?gr=s01&ugr=struct](http://w3sdesign.com/?gr=s01&ugr=struct) 
 
 ```java
 // 변경 불가한 외부 라이브러리를 사용하고자 하는 클래스 - 상단의 Client
